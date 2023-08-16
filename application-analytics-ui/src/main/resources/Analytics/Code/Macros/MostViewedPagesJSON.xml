@@ -36,7 +36,7 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>
+  <content>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 {{velocity}}
 #if ($xcontext.action == 'get')
   #set ($offset = $numbertool.toNumber($request.offset).intValue())
@@ -89,6 +89,7 @@
   })
   #foreach($currentEntry  in $analyticsResult)
     #set ($url = $currentEntry.get('url').asText())
+    #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
       'date' : $currentEntry.get('date').asText(),
       'title' : $currentEntry.get('label').asText(),
@@ -98,7 +99,8 @@
       'entryNbVisits' : $currentEntry.get('entry_nb_visits').asText(),
       'entryNbActions' : $currentEntry.get('entry_nb_actions').asText(),
       'bounceRate' : $currentEntry.get('bounce_rate').asText(),
-      'exitRate' : $currentEntry.get('exit_rate').asText()
+      'exitRate' : $currentEntry.get('exit_rate').asText(),
+      'actions' : "#setParameterOnAction($url)"
     }))
   #end
   #jsonResponse($results)

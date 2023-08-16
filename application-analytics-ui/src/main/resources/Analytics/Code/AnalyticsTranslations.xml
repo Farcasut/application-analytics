@@ -47,6 +47,7 @@ Analytics.Code.AnalyticsDashboardClass_startDate=Start date
 Analytics.Code.AnalyticsDashboardClass_startDate.hint=Start time of the date interval used on all statistics of this dashboard.
 
 ## Most Viewed Pages Macro
+analytics.mostViewedPages.header.actions=Actions
 analytics.mostViewedPages.header.bounceRate=Bounce rate
 analytics.mostViewedPages.header.date=Date
 analytics.mostViewedPages.header.entryNbVisits=No. of views that started on this page
@@ -54,6 +55,7 @@ analytics.mostViewedPages.header.entryNbActions= No. of actions
 analytics.mostViewedPages.header.emptyvalue=-
 analytics.mostViewedPages.header.exitRate=Exit rate
 analytics.mostViewedPages.header.hits=Page views
+analytics.mostViwedMacros.action.action.label.rowEvolution=RowEvolution
 analytics.mostViewedPages.header.timeSpent=Time spent
 analytics.mostViewedPages.header.title=Page title
 analytics.mostViewedPages.header.visits=Unique visitors

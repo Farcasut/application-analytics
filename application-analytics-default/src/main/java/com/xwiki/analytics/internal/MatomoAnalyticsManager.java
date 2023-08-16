@@ -60,6 +60,10 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     private JsonNormaliser mostViewedNormaliser;
 
     @Inject
+    @Named("RowEvolution")
+    private JsonNormaliser rowEvolution;
+
+    @Inject
     private AnalyticsConfiguration configuration;
 
     /**
@@ -108,9 +112,13 @@ public class MatomoAnalyticsManager implements AnalyticsManager
 
     private JsonNormaliser getNormaliser(String hint)
     {
-        if (hint.equals("MostViewedPages")) {
-            return this.mostViewedNormaliser;
+        switch (hint) {
+            case "MostViewedPages":
+                return this.mostViewedNormaliser;
+            case "RowEvolution":
+                return this.rowEvolution;
+            default:
+                return null;
         }
-        return null;
     }
 }

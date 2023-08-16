@@ -27,17 +27,16 @@
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <parent>Main.WebHome</parent>
+  <parent>WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>VelocityMacros</title>
+  <title/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>
-{{velocity}}
+  <content>{{velocity}}
 #macro (getDate)
   #set ($dashbord = $doc.getObject('Analytics.Code.AnalyticsDashboardClass'))
   ## A dashboard will have a date inside and that date will take precedence over the date set by the macro.
@@ -63,6 +62,81 @@
   ## Prepare the livetable with the fields and properties.
   #set ($date = $startDate + ',' + $endDate)
 #end
-{{/velocity}}
-</content>
+
+#macro(setParameterOnAction $parameter)
+&lt;div class="displayMostViewedPagesActions"  data-parameter=$escapetool.url($parameter)&gt;
+  &lt;a class="move-attachment action" title="$escapetool.xml($services.localization.render('analytics.mostViwedMacros.action.rowEvolution'))" href="#"&gt;
+    &lt;span class="action-icon"&gt;$services.icon.renderHTML('eye')&lt;/span&gt;&lt;span class="action-label"&gt;$escapetool.xml($services.localization.render('analytics.mostViwedMacros.action.action.label.rowEvolution'))&lt;/span&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+#end
+
+#macro(modalRowEvolution $fields $requestPage)
+{{html clean=false}}
+&lt;div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel" aria-hidden="true"&gt;
+    &lt;div class="modal-dialog modal-lg"&gt;
+        &lt;div class="modal-content"&gt;
+            &lt;div class="modal-header"&gt;
+                &lt;button type="button" class="close" data-dismiss="modal" aria-label="Close"&gt;
+                    &lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;h4 class="modal-title" id="chartModalLabel"&gt;Row Evolution&lt;/h4&gt;
+            &lt;/div&gt;
+            &lt;div class="modal-body"&gt;
+                &lt;label for="periodSelect"&gt;Period&lt;/label&gt;
+                &lt;select id="periodSelect" class="form-control"&gt;
+                    &lt;option value="Day"&gt;Day&lt;/option&gt;
+                    &lt;option value="Week"&gt;Week&lt;/option&gt;
+                    &lt;option value="Month"&gt;Month&lt;/option&gt;
+                    &lt;option value="Year"&gt;Year&lt;/option&gt;
+                &lt;/select&gt;
+                &lt;div id="options" data-request-page=$requestPage&gt;
+                &lt;select id="periodDurationDay" class="form-control"&gt;
+                					&lt;option value="30"&gt;30&lt;/option&gt;
+									&lt;option value="8"&gt;8&lt;/option&gt;
+									&lt;option value="60"&gt;60&lt;/option&gt;
+									&lt;option value="90"&gt;90&lt;/option&gt;
+									&lt;option value="180"&gt;180&lt;/option&gt;
+									&lt;option value="365"&gt;365&lt;/option&gt;
+									&lt;option value="500"&gt;500&lt;/option&gt;
+                &lt;/select&gt;
+                &lt;select id="periodDurationWeek" class="form-control"&gt;
+									&lt;option value="4"&gt;4&lt;/option&gt;
+									&lt;option value="12"&gt;12&lt;/option&gt;
+									&lt;option value="26"&gt;26&lt;/option&gt;
+									&lt;option value="52"&gt;52&lt;/option&gt;
+									&lt;option value="104"&gt;104&lt;/option&gt;
+									&lt;option value="500"&gt;500&lt;/option&gt;
+                &lt;/select&gt;
+                &lt;select id="periodDurationMonth" class="form-control"&gt;
+									&lt;option value="3"&gt;3&lt;/option&gt;
+									&lt;option value="6"&gt;6&lt;/option&gt;
+									&lt;option value="12"&gt;12&lt;/option&gt;
+									&lt;option value="24"&gt;24&lt;/option&gt;
+									&lt;option value="36"&gt;36&lt;/option&gt;
+									&lt;option value="120"&gt;120&lt;/option&gt;
+                &lt;/select&gt;
+                &lt;select id="periodDurationYear" class="form-control"&gt;
+									&lt;option value="3"&gt;3&lt;/option&gt;
+									&lt;option value="5"&gt;5&lt;/option&gt;
+									&lt;option value="10"&gt;10&lt;/option&gt;
+                &lt;/select&gt;
+                &lt;/div&gt;
+                &lt;label for="field"&gt;Field&lt;/label&gt;
+                &lt;select id="field" class="form-control"&gt;
+                  #foreach($key in $fields.keySet())
+                      &lt;option value="$fields.get($key)"&gt;$key&lt;/option&gt;
+                  #end
+                &lt;/select&gt;
+                &lt;canvas id="chart-display"&gt;&lt;/canvas&gt;
+            &lt;/div&gt;
+            &lt;div class="modal-footer"&gt;
+                &lt;button type="button" class="btn btn-default" data-dismiss="modal"&gt;Close&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+{{/html}}
+#end
+{{/velocity}}</content>
 </xwikidoc>

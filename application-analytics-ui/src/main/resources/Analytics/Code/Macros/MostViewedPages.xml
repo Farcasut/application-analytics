@@ -240,37 +240,17 @@
       <async_enabled>0</async_enabled>
     </property>
     <property>
-      <code>{{velocity}}
-#set ($dashbord = $doc.getObject('Analytics.Code.AnalyticsDashboardClass'))
+      <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
+{{velocity}}
+#getDate()
+#set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
 #set ($period = 'range')
-## A dashboard will have a date inside and that date will take precedence over the date set by the macro.
-#if ($dashbord)
-  #set ($startDate = $dashbord.getProperty('startDate'))
-  #set ($endDate = $dashbord.getProperty('endDate'))
-#else
-  #set ($startDate = $xcontext.macro.params.startDate.toString())
-  #set ($endDate = $xcontext.macro.params.endDate.toString())
-#end
-#set ($startDateObj = $datetool.toDate('yyyy/MM/dd HH:mm', $startDate))
-#set ($startDate = $datetool.format('yyyy-MM-dd', $startDateObj))
-#set ($endDateObj = $datetool.toDate('yyyy/MM/dd HH:mm', $endDate))
-#set ($endDate = $datetool.format('yyyy-MM-dd', $endDateObj))
-## Check if startDate or endDate are not defined and replace them with some default values, in order to match the end of
-## the time interval. For startDate we use '2007-01-01' since it's the oldest one accepted by Matomo.
-#if (!$startDate)
-  #set ($startDate = '2007-01-01')
-#end
-#if (!$endDate)
-  #set ($endDate = $datetool.get('yyyy-MM-dd'))
-#end
-## Prepare the livetable with the fields and properties.
-#set ($date = $startDate + ',' + $endDate)
 #set ($parameters = $escapetool.url({
         'date': $date,
         'period': $$period,
         'limitEntries' : '-1'
 }))
-#set ($columns = ['date', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate','documentReference', 'URL', 'actions'])
+#set ($columns = ['date', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate', 'actions'])
 #set ($columnsProperties = {
   'date' : { 'type' : 'text', 'sortable' : true },
   'title' : { 'type' : 'text', 'sortable' : true },
@@ -280,7 +260,8 @@
   'entryNbVisits' : { 'type' : 'text', 'sortable' : true },
   'entryNbActions' : { 'type' : 'text', 'sortable' : true },
   'bounceRate' : { 'type' : 'text', 'sortable' : true },
-  'exitRate' : { 'type' : 'text', 'sortable' : true }
+  'exitRate' : { 'type' : 'text', 'sortable' : true },
+  'actions' : {'type': 'text', 'html':'true', 'sortable' : false, 'filterable' : false}
 })
 #set($options = {
   'translationPrefix': 'analytics.mostViewedPages.header.',
@@ -288,6 +269,7 @@
   'extraParams': $parameters
 })
 #livetable('mostViewedPages' $columns $columnsProperties $options)
+#modalRowEvolution({'Pageviews':'nb_hits','Pageviewes':'nb_visits', "Avg. time on page":'avg_time_on_page'}, 'RowEvolutionMostViwedPagesJSON')
 {{/velocity}}</code>
     </property>
     <property>

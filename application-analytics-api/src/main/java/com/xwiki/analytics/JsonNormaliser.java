@@ -19,12 +19,7 @@
  */
 package com.xwiki.analytics;
 
-import java.net.MalformedURLException;
-
 import org.xwiki.component.annotation.Role;
-import org.xwiki.resource.CreateResourceReferenceException;
-import org.xwiki.resource.CreateResourceTypeException;
-import org.xwiki.resource.UnsupportedResourceReferenceException;
 import org.xwiki.stability.Unstable;
 
 import com.fasterxml.jackson.core.JsonProcessingException;

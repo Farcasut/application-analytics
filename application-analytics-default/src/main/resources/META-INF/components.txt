@@ -3,3 +3,4 @@ com.xwiki.analytics.internal.configuration.DefaultAnalyticsConfiguration
 com.xwiki.analytics.script.AnalyticsScriptService
 com.xwiki.analytics.internal.MatomoAnalyticsManager
 com.xwiki.analytics.internal.MostViewedJsonNormaliser
+com.xwiki.analytics.internal.RowEvolutionJsonNormaliser
