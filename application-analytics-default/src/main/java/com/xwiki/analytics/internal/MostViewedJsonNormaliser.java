@@ -67,8 +67,6 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
 
     private static final String LABEL = "label";
 
-    private static final String DOCUMENT_REFERENCE = "documentReference";
-
     @Inject
     private ResourceReferenceResolver<ExtendedURL> resourceReferenceResolver;
 

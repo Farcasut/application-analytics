@@ -47,7 +47,6 @@ public interface JsonNormaliser
      * @return Returns the json in string format
      * @throws JsonProcessingException Throws this error when the jsonString param is not a proper json.
      */
-    JsonNode normaliseData(String jsonString)
-        throws JsonProcessingException, MalformedURLException, UnsupportedResourceReferenceException,
-        CreateResourceTypeException, CreateResourceReferenceException;
+    JsonNode normaliseData(String jsonString) throws JsonProcessingException;
+
 }
