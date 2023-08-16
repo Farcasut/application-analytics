@@ -38,8 +38,6 @@
   <hidden>true</hidden>
   <content>
 {{velocity}}
-#template('attachment_macros.vm')
-#template('hierarchy_macros.vm')
 #if ($xcontext.action == 'get')
   #set ($offset = $numbertool.toNumber($request.offset).intValue())
   ## The offset sent by the live table starts at 1.
