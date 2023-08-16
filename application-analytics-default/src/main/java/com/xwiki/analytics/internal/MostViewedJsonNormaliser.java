@@ -66,11 +66,6 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
     private static final String URL = "url";
 
     private static final String LABEL = "label";
-
-<<<<<<< HEAD
-=======
-
->>>>>>> RowEvolution
     @Inject
     private ResourceReferenceResolver<ExtendedURL> resourceReferenceResolver;
 
