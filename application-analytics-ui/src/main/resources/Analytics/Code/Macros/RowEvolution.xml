@@ -1,0 +1,279 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.RowEvolution" locale="">
+  <web>Analytics.Code.Macros</web>
+  <name>RowEvolution</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <version>1.1</version>
+  <title/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content/>
+  <object>
+    <name>Analytics.Code.Macros.RowEvolution</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>9fc4c61e-9ad5-4ca3-9cc7-41d424a82a3a</guid>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <defaultValue>long</defaultValue>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>require.config({
+  paths: {
+    'chartjs': 'https://cdn.jsdelivr.net/npm/chart.js/dist/Chart.min',
+  }
+});
+
+require(['jquery', 'chartjs'], ($) =&gt; {
+  const PERIODS = ["Day", "Week", "Month", "Year"];
+  let chart;
+
+  /**
+   * Creates the chart
+   *
+   * @param data json with the dataset for the current page.
+   */
+  const renderChart = (data) =&gt; {
+    const dates = data.map(item =&gt; item.date);
+    const nbHits = data.map(item =&gt; item[$('#field').val()] || 0);
+    const ctx = $('#chart-display');
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: '',
+          data: nbHits,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          fill: false
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    $('#chartModal').modal('show');
+  };
+
+  /**
+   * Fetches the data from Matomo using the XWiki server as a proxy through the RowEvolutionJSON page. It then saves the data in session 
+   * storage for easy access. This allows the user to display a different field for the same time interval without making a new request and updates the chart.
+   *
+   * @param parameter parameter need for the request
+   */
+  const fetchChartData = (parameter) =&gt; {
+    $('#chartModal').data('parameter', parameter);
+    const period = $('#periodSelect').val().toLowerCase();
+    const options = $('#options')
+    const date = options.data('date');
+    const requestPage = options.data('requestPage')
+    $.getJSON(`${requestPage}?parameter=${parameter}&amp;period=${period}&amp;date=last${date}`)
+      .done((data) =&gt; {
+        window.sessionStorage.setItem('analyticsLastRequestCache', JSON.stringify(data));
+        renderChart(data);
+      })
+      .fail((jqxhr, textStatus, error) =&gt; {
+        const err = `${textStatus}, ${error}`;
+        console.error(`Request Failed: ${err}`);
+      });
+  };
+
+  const updateVisibility = (period) =&gt; {
+    PERIODS.forEach(p =&gt; {
+      p === period ? $(`#periodDuration${p}`).show() : $(`#periodDuration${p}`).hide();
+    });
+    $('#options').data('date', $(`#periodDuration${period}`).val());
+  };
+
+  /**
+   * Updates the chart when the time is changed.
+   */
+  const updateOnChange = () =&gt; {
+    PERIODS.forEach(p =&gt; {
+      $(`#periodDuration${p}`).on('change', function () {
+        $('#options').data('date', $(`#periodDuration${p}`).val());
+        fetchChartData($('#chartModal').data('parameter'));
+      });
+    });
+  };
+
+  /**
+   * Resets to the default option for all the selectos.
+   */
+  const restOptions = () =&gt; {
+    $('#chartModal').on('hidden.bs.modal', function () {
+      PERIODS.forEach(p =&gt; {
+        $(`#periodDuration${p}`).prop('selectedIndex', 0);
+      });
+      $('#field').prop('selectedIndex', 0);
+    });
+  };
+
+  const displayStatisitcs = () =&gt; {
+    $('#field').on('change', function () {
+      renderChart(JSON.parse(window.sessionStorage.getItem('analyticsLastRequestCache')));
+    });
+  };
+
+  /**
+   * Binds the event that will open the modal and display the data when the 'Row Evolution' button is clicked. 
+   */
+  const bindRowEvolutionDisplay = () =&gt; {
+    $(document).on('click', '.displayMostViewedPagesActions', function () {
+      updateVisibility('Day');
+      const parameter = $(this).data('parameter');
+      $('#periodSelect').prop('selectedIndex', 0);
+      $('#options').data('date', '30');
+      fetchChartData(parameter);
+    });
+  };
+
+  /**
+   * Bind the event that will change the options for the time when the period is changed. Will also update the graph with
+   * the new period and the default time for that period.
+   */
+  const bindPeriodChangeEvent = () =&gt; {
+    $('#periodSelect').on('change', function () {
+      const period = $(this).val();
+      restOptions();
+      updateVisibility(period);
+      fetchChartData($('#chartModal').data('parameter'));
+    });
+  };
+
+  const bindEvents = () =&gt; {
+    updateOnChange();
+    restOptions();
+    displayStatisitcs();
+    bindPeriodChangeEvent();
+    bindRowEvolutionDisplay();
+  };
+
+  $(document).ready(() =&gt; {
+    updateVisibility('Day');
+    bindEvents();
+  });
+});
+</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>0</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
+</xwikidoc>
