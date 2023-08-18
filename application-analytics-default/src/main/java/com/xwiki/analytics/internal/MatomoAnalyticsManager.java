@@ -31,11 +31,8 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.ws.rs.core.UriBuilder;
 
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.component.manager.ComponentLookupException;
-import org.xwiki.resource.CreateResourceReferenceException;
-import org.xwiki.resource.CreateResourceTypeException;
-import org.xwiki.resource.UnsupportedResourceReferenceException;
 import org.xwiki.stability.Unstable;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -56,6 +53,9 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 public class MatomoAnalyticsManager implements AnalyticsManager
 {
     @Inject
+    private Logger logger;
+
+    @Inject
     @Named("MostViewedPages")
     private JsonNormaliser mostViewedNormaliser;
 
@@ -75,15 +75,14 @@ public class MatomoAnalyticsManager implements AnalyticsManager
      */
     @Override
     public JsonNode requestData(Map<String, String> parameters, String jsonNormaliserHint)
-        throws IOException, InterruptedException, ComponentLookupException, UnsupportedResourceReferenceException,
-        CreateResourceTypeException, CreateResourceReferenceException
+        throws IOException, InterruptedException
     {
         parameters.put("idSite", configuration.getIdSite());
         parameters.put("token_auth", configuration.getAuthenticationToken());
         JsonNormaliser jsonNormaliser = this.getNormaliser(jsonNormaliserHint);
         if (jsonNormaliser == null) {
-            throw new RuntimeException("Error occurred while retrieving Matomo statistic results. There is no JSON"
-                    + " normalizer associated with the hint you provided.");
+            logger.warn("There is no JSON normalizer associated with the [{}] hint you provided.", jsonNormaliserHint);
+            throw new RuntimeException("Error occurred while retrieving Matomo statistic results.");
         }
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder(buildURI(configuration.getRequestAddress(), parameters))

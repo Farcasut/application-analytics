@@ -48,6 +48,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xwiki.analytics.JsonNormaliser;
 
 import liquibase.repackaged.org.apache.commons.lang3.exception.ExceptionUtils;
+
 /**
  * The normaliser for the MostViewedMacro.
  *
@@ -66,6 +67,7 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
     private static final String URL = "url";
 
     private static final String LABEL = "label";
+
     @Inject
     private ResourceReferenceResolver<ExtendedURL> resourceReferenceResolver;
 
@@ -75,25 +77,19 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
     @Inject
     private ResourceTypeResolver<ExtendedURL> resourceTypeResolver;
 
-    /**
-     * This method will normalise the jsons returned by Matomo into a single format.
-     *
-     * @param jsonString the json provided by Matomo.
-     * @return the normalised json as a string.
-     */
+    @Override
     public JsonNode normaliseData(String jsonString) throws JsonProcessingException
     {
         // I need to convert the string returned by matomo in a JSON to easily handle the processing of the nodes.
         JsonNode jsonRoot = OBJECT_MAPPER.readTree(jsonString);
-        // Matomo may return several variants of JSON formats. In one scenario, when the period is set to
-        // day/week/month/year, it returns a JSON object with keys representing dates. The corresponding value for
-        // each key is an array of JSON objects, each of which represents a page. However, if the user sets the
-        // period parameter to "range" Matomo returns an array of JSON objects, with each JSON object representing
-        // a page. Due to these variations, I need to process the result from Matomo to create a normalized format.
-        // This normalized format is an array of JSON objects and each JSON object in this array will have a new
-        // field called 'date'. This 'date' field will be set to 'N/A' when Matomo returns an array instead of an
-        // object. In the 'processArrayNode' and 'processObjectNode' methods, I also modify the 'label' field to
-        // change it from the raw URL format to the page name.
+        // In one scenario, when the period is set to day/week/month/year, it returns a JSON object with keys
+        // representing dates. The corresponding value for each key is an array of JSON objects, each of which
+        // represents a page. However, if the user sets the period parameter to "range" Matomo returns an array of
+        // JSON objects, with each JSON object representing a page. Due to these variations, I need to process the
+        // result from Matomo to create a normalized format. This normalized format is an array of JSON objects and
+        // each JSON object in this array will have a new field called 'date'. This 'date' field will be set to 'N/A'
+        // when Matomo returns an array instead of an object. In the 'processArrayNode' and 'processObjectNode'
+        // methods, I also modify the 'label' field to change it from the raw URL format to the page name.
         if (jsonRoot.isArray()) {
             processArrayNode(jsonRoot);
         } else {
@@ -128,7 +124,6 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
      * @param jsonNode json object
      * @return array of jsons
      */
-
     private ArrayNode processObjectNode(JsonNode jsonNode)
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();

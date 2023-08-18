@@ -20,8 +20,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPagesJSON" locale="">
-  <web>Analytics.Code.Macros</web>
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPagesMacro.MostViewedPagesJSON" locale="">
+  <web>Analytics.Code.Macros.MostViewedPagesMacro</web>
   <name>MostViewedPagesJSON</name>
   <language/>
   <defaultLanguage/>
@@ -63,7 +63,7 @@
   })
   #set ($sort = 'nb_hits')
   #set ($order = 'desc')
-  #if($request.sort &amp;&amp; $request.reqNo!='1')
+  #if ($request.sort &amp;&amp; $request.reqNo!='1')
     #set($sort = $keys.get($request.sort))
     #set($order = $request.dir)
   #end
@@ -87,7 +87,7 @@
     "reqNo": $numbertool.toNumber($request.reqNo).intValue(),
     "rows": []
   })
-  #foreach($currentEntry  in $analyticsResult)
+  #foreach ($currentEntry in $analyticsResult)
     #set ($url = $currentEntry.get('url').asText())
     #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({

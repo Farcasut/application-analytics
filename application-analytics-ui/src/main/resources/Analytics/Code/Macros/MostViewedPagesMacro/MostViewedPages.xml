@@ -20,8 +20,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPages" locale="">
-  <web>Analytics.Code.Macros</web>
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPagesMacro.MostViewedPages" locale="">
+  <web>Analytics.Code.Macros.MostViewedPagesMacro</web>
   <name>MostViewedPages</name>
   <language/>
   <defaultLanguage/>
@@ -38,7 +38,7 @@
   <hidden>true</hidden>
   <content>{{mostViewedPage/}}</content>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
+    <name>Analytics.Code.Macros.MostViewedPagesMacro.MostViewedPages</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
     <guid>dc943965-6af8-4905-8508-9b8c248c3930</guid>
@@ -265,11 +265,12 @@
 })
 #set($options = {
   'translationPrefix': 'analytics.mostViewedPages.header.',
-  'resultPage': 'Analytics.Code.Macros.MostViewedPagesJSON',
+  'resultPage': 'Analytics.Code.Macros.MostViewedPagesMacro.MostViewedPagesJSON',
   'extraParams': $parameters
 })
 #livetable('mostViewedPages' $columns $columnsProperties $options)
-#modalRowEvolution({'Pageviews':'nb_hits','Pageviewes':'nb_visits', "Avg. time on page":'avg_time_on_page'}, 'RowEvolutionMostViwedPagesJSON')
+#modalRowEvolution({'Pageviews':'nb_hits','Unique Views':'nb_visits', "Avg. time on page":'avg_time_on_page'},
+        'RowEvolutionMostViwedPagesJSON')
 {{/velocity}}</code>
     </property>
     <property>
@@ -304,7 +305,7 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
+    <name>Analytics.Code.Macros.MostViewedPagesMacro.MostViewedPages</name>
     <number>0</number>
     <className>XWiki.WikiMacroParameterClass</className>
     <guid>6e3cae3f-3127-4fb2-a590-5dce2f4be0d0</guid>
@@ -382,7 +383,7 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
+    <name>Analytics.Code.Macros.MostViewedPagesMacro.MostViewedPages</name>
     <number>1</number>
     <className>XWiki.WikiMacroParameterClass</className>
     <guid>8a9fb4a7-d7e2-4d7d-84b8-8afb71b4606d</guid>

@@ -25,18 +25,19 @@ import java.util.HashMap;
 import javax.inject.Named;
 
 import org.junit.jupiter.api.Test;
-import org.xwiki.component.manager.ComponentLookupException;
-import org.xwiki.resource.CreateResourceReferenceException;
-import org.xwiki.resource.CreateResourceTypeException;
-import org.xwiki.resource.UnsupportedResourceReferenceException;
+import org.mockito.Mock;
+import org.slf4j.Logger;
 import org.xwiki.test.junit5.mockito.ComponentTest;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
 import org.xwiki.test.junit5.mockito.MockComponent;
 
 import com.xwiki.analytics.JsonNormaliser;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
+import org.xwiki.component.util.ReflectionUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -57,14 +58,35 @@ public class MatomoAnalyticsManagerTest
     @MockComponent
     private AnalyticsConfiguration configuration;
 
+    @MockComponent
+    private Logger logger;
+
     @Test
-    public void MatomoAnalyticsManagerTest()
-        throws ComponentLookupException, IOException, UnsupportedResourceReferenceException, InterruptedException,
-        CreateResourceTypeException, CreateResourceReferenceException
+    public void requestDataWithCorrectHintForNormaliser() throws IOException, InterruptedException
     {
         when(this.configuration.getAuthenticationToken()).thenReturn("token");
         when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
         when(this.configuration.getIdSite()).thenReturn("3");
-        assertEquals(null,  this.matomoAnalyticsManager.requestData(new HashMap<>(), "MostViewedPages"));
+        this.matomoAnalyticsManager.requestData(new HashMap<>(), "MostViewedPages");
+        verify(this.jsonNormaliser).normaliseData(any(String.class));
+    }
+    @Test
+    public void requestDataWithInvalidNormaliser() throws IOException, InterruptedException
+    {
+        ReflectionUtils.setFieldValue(this.matomoAnalyticsManager, "logger", this.logger);
+        when(this.configuration.getAuthenticationToken()).thenReturn("token");
+        when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
+        when(this.configuration.getIdSite()).thenReturn("3");
+        try {
+            when(this.matomoAnalyticsManager.requestData(new HashMap<>(), "RANDOM_NORMALISER")).thenThrow(
+                new RuntimeException());
+            verify(this.logger).warn("There is no JSON normalizer associated with the [{}] hint you provided.",
+                "RANDOM_NORMALISER");
+        }
+        catch (RuntimeException e)
+        {
+            assertEquals(e.getMessage(), "Error occurred while retrieving Matomo statistic results.");
+        }
+
     }
 }
