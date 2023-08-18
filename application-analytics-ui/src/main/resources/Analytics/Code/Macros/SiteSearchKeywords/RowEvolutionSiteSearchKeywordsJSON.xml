@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.RowEvolutionMostViwedPagesJSON" locale="">
-  <web>Analytics.Code.Macros</web>
-  <name>RowEvolutionMostViwedPagesJSON</name>
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.SiteSearchKeywords.RowEvolutionSiteSearchKeywordsJSON" locale="">
+  <web>Analytics.Code.Macros.SiteSearchKeywords</web>
+  <name>RowEvolutionSiteSearchKeywordsJSON</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,7 +31,7 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>RowEvolutionMostViwedPagesJSON</title>
+  <title>RowEvolutionSiteSearchKeywordsJSON</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
@@ -41,9 +41,9 @@
   'period' : $request.period,
   'date' : $request.date,
   'module' : 'API',
-  'method' : 'Actions.getPageUrl',
+  'method' : 'Actions.getSiteSearchKeywords',
   'format' : 'json',
-  'pageUrl' : $request.parameter
+  'segment' : $request.parameter
 })
 #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, 'RowEvolution'))
 #jsonResponse($analyticsResult)

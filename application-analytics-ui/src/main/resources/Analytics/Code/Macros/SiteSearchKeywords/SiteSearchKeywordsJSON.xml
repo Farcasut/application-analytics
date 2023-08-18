@@ -20,8 +20,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.SiteSearchKeywordsJSON" locale="">
-  <web>Analytics.Code.Macros</web>
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.SiteSearchKeywords.SiteSearchKeywordsJSON" locale="">
+  <web>Analytics.Code.Macros.SiteSearchKeywords</web>
   <name>SiteSearchKeywordsJSON</name>
   <language/>
   <defaultLanguage/>
@@ -36,7 +36,8 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{velocity}}
+  <content>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
+{{velocity}}
 #if ($xcontext.action == 'get')
   #set ($offset = $numbertool.toNumber($request.offset).intValue())
   ## The offset sent by the live table starts at 1.
@@ -80,16 +81,16 @@
     "rows": []
   })
   #foreach($currentEntry  in $analyticsResult)
-    #set ($url = $currentEntry.get('url').asText())
+    #set ($parameter =  $currentEntry.get('segment').asText())
     #set ($discard = $results.rows.add({
       'keyword' : $currentEntry.get('label').asText(),
       'searches' : $currentEntry.get('nb_visits').asText(),
       'nbOfResultPages' : $currentEntry.get('nb_pages_per_search').asText(),
-      'exitRate' : $currentEntry.get('exit_rate').asText()
+      'exitRate' : $currentEntry.get('exit_rate').asText(),
+      'actions' : "#setParameterOnAction($parameter)"
     }))
   #end
   #jsonResponse($results)
-
 #end
 {{/velocity}}
 </content>

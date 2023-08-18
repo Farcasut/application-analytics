@@ -64,11 +64,12 @@ analytics.mostViewedPages.parameter.label.startDate=Start time of the date inter
 analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
 
 ## Site Search Keywords Macro
+analytics.siteSearchKeywords.header.actions=Actions
 analytics.siteSearchKeywords.header.exitRate=%Search Exists
 analytics.siteSearchKeywords.header.keyword=Keyword
 analytics.siteSearchKeywords.header.nbOfResultPages=Search Results Pages
 analytics.siteSearchKeywords.header.searches=Searches
-
+ 
 ## Admin section
 admin.analytics.application=Analytics
 Analytics.Code.ConfigurationClass_authToken=Authentication token

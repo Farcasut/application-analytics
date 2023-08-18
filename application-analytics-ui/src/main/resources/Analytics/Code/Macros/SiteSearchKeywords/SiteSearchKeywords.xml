@@ -20,14 +20,14 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.SiteSearchKeywords" locale="">
-  <web>Analytics.Code.Macros</web>
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.SiteSearchKeywords.SiteSearchKeywords" locale="">
+  <web>Analytics.Code.Macros.SiteSearchKeywords</web>
   <name>SiteSearchKeywords</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <parent>Main.WebHome</parent>
+  <parent>WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
@@ -38,7 +38,7 @@
   <hidden>true</hidden>
   <content>{{siteSearchKeywords startDate="2023/08/01 12:36" endDate="2023/08/31 12:36"/}}</content>
   <object>
-    <name>Analytics.Code.Macros.SiteSearchKeywords</name>
+    <name>Analytics.Code.Macros.SiteSearchKeywords.SiteSearchKeywords</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
     <guid>2e2429a1-3904-4a6a-89d3-d6d79c2a3ed5</guid>
@@ -243,28 +243,28 @@
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 {{velocity}}
 #getDate()
+#set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
 #set ($period = 'range')
 #set ($parameters = $escapetool.url({
         'date': $date,
         'period': $$period,
         'limitEntries' : '-1'
 }))
-#set ($columns = ['keyword', 'searches', 'nbOfResultPages', 'exitRate'])
+#set ($columns = ['keyword', 'searches', 'nbOfResultPages', 'exitRate' , 'actions'])
 #set ($columnsProperties = {
   'keyword' : { 'type' : 'text', 'sortable' : true },
   'searches' : { 'type' : 'text', 'sortable' : true },
   'nbOfResultPages' : { 'type' : 'text', 'sortable' : true },
-  'exitRate' : { 'type' : 'text', 'sortable' : true }
+  'exitRate' : { 'type' : 'text', 'sortable' : true },
+  'actions' : {'type': 'text', 'html':'true', 'sortable' : false, 'filterable' : false}
 })
 #set($options = {
   'translationPrefix': 'analytics.siteSearchKeywords.header.',
-  'resultPage': 'Analytics.Code.Macros.SiteSearchKeywordsJSON',
+  'resultPage': 'Analytics.Code.Macros.SiteSearchKeywords.SiteSearchKeywordsJSON',
   'extraParams': $parameters
 })
 #livetable('siteSearchKeywords' $columns $columnsProperties $options)
-
-
-
+#modalRowEvolution({'Searches':'nb_visits','Search Results Pages':'nb_pages_per_search'}, 'RowEvolutionSiteSearchKeywordsJSON')
 {{/velocity}}</code>
     </property>
     <property>
@@ -299,7 +299,7 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.SiteSearchKeywords</name>
+    <name>Analytics.Code.Macros.SiteSearchKeywords.SiteSearchKeywords</name>
     <number>0</number>
     <className>XWiki.WikiMacroParameterClass</className>
     <guid>108903f8-e7f9-4405-84ee-4c9ecdc806c7</guid>
@@ -377,7 +377,7 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.SiteSearchKeywords</name>
+    <name>Analytics.Code.Macros.SiteSearchKeywords.SiteSearchKeywords</name>
     <number>1</number>
     <className>XWiki.WikiMacroParameterClass</className>
     <guid>51bf8ca3-6ffb-4525-a553-7a7e033407a5</guid>
