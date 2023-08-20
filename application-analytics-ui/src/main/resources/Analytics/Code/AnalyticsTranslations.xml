@@ -63,6 +63,13 @@ analytics.mostViewedPages.header.year=Year
 analytics.mostViewedPages.parameter.label.startDate=Start time of the date interval used for this macro
 analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
 
+## Pages Following a Site Search Macro
+analytics.pagesFollowingaSiteSearch.header.actions=Actions
+analytics.pagesFollowingaSiteSearch.header.clicked=Clicked in search result
+analytics.pagesFollowingaSiteSearch.header.destinationPage=Destination page
+analytics.pagesFollowingaSiteSearch.header.loadTime=Avg. load time
+analytics.pagesFollowingaSiteSearch.header.pageViews=Pageviews
+
 ## Admin section
 admin.analytics.application=Analytics
 Analytics.Code.ConfigurationClass_authToken=Authentication token

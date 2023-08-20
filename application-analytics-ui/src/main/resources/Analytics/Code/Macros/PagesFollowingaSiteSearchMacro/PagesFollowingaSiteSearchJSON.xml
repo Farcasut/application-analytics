@@ -1,0 +1,80 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.PagesFollowingaSiteSearchMacro.PagesFollowingaSiteSearchJSON" locale="">
+  <web>Analytics.Code.Macros.PagesFollowingaSiteSearchMacro</web>
+  <name>PagesFollowingaSiteSearchJSON</name>
+  <language/>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>0</translation>
+  <creator>XWiki.superadmin</creator>
+  <creationDate>1692362570000</creationDate>
+  <parent>Analytics.Code.Macros.PagesFollowingaSiteSearchMacro.WebHome</parent>
+  <author>XWiki.superadmin</author>
+  <contentAuthor>XWiki.superadmin</contentAuthor>
+  <date>1692380718000</date>
+  <contentUpdateDate>1692380718000</contentUpdateDate>
+  <version>1.13</version>
+  <title>PagesFollowingaSiteSearchJSON</title>
+  <comment/>
+  <minorEdit>true</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}&#xd;
+{{velocity}}&#xd;
+#if ($xcontext.action == 'get')&#xd;
+  #set ($offset = $numbertool.toNumber($request.offset).intValue())&#xd;
+  ## The offset sent by the live table starts at 1.&#xd;
+  #set ($offset = $offset - 1)&#xd;
+  #if (!$offset || $offset &lt; 0)&#xd;
+    #set ($offset = 0)&#xd;
+  #end&#xd;
+  #set ($limit = $numbertool.toNumber($request.limit).intValue())&#xd;
+  #if (!$limit)&#xd;
+    #set ($limit = 15)&#xd;
+  #end&#xd;
+  ##&#xd;
+  #set ($keys = {&#xd;
+  'destinationPage' : 'label',&#xd;
+  'clicked' : 'nb_hits_following_search',&#xd;
+  'pageViews' : 'nb_hits',&#xd;
+  'loadTime' : 'avg_page_load_time'&#xd;
+  })&#xd;
+  #set ($sort = 'nb_hits')&#xd;
+  #set ($order = 'desc')&#xd;
+  #if ($request.sort &amp;&amp; $request.reqNo!='1')&#xd;
+    #set($sort = $keys.get($request.sort))&#xd;
+    #set($order = $request.dir)&#xd;
+  #end&#xd;
+  #set ($parameters = {&#xd;
+    'period' : $request.period,&#xd;
+    'date' : $request.date,&#xd;
+    'module' : 'API',&#xd;
+    'method' : 'Actions.getPageUrlsFollowingSiteSearch',&#xd;
+    'format' : 'json',&#xd;
+    'filter_limit' : $request.limitEntries,&#xd;
+    'filter_sort_column' : $sort,&#xd;
+    'filter_sort_order' : $order,&#xd;
+    'expanded' : '1',&#xd;
+    'flat' : '1'&#xd;
+  })&#xd;
+  #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, 'MostViewedPages'))&#xd;
+  #set ($results = {&#xd;
+    "totalrows": $analyticsResult.size(),&#xd;
+    "returnedrows": $analyticsResult.size(),&#xd;
+    "offset": $mathtool.add($offset, 1),&#xd;
+    "reqNo": $numbertool.toNumber($request.reqNo).intValue(),&#xd;
+    "rows": []&#xd;
+  })&#xd;
+  #foreach ($currentEntry in $analyticsResult)&#xd;
+    #set ($parameter = $currentEntry.get('url').asText())&#xd;
+    #set ($discard = $results.rows.add({&#xd;
+      'destinationPage' : $currentEntry.get('Actions_DestinationPage').asText(),&#xd;
+      'clicked' : $currentEntry.get('nb_hits_following_search').asText(),&#xd;
+      'pageViews' : $currentEntry.get('nb_hits').asText(),&#xd;
+      'loadTime' : $currentEntry.get('avg_page_load_time').asText(),&#xd;
+      'actions' : "#setParameterOnAction($parameter)"&#xd;
+    }))&#xd;
+  #end&#xd;
+  #jsonResponse($results)&#xd;
+#end&#xd;
+{{/velocity}}</content>
+</xwikidoc>

@@ -1,0 +1,35 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.PagesFollowingaSiteSearchMacro.RowEvolutionPagesFollowingaSiteSearchJSON" locale="">
+  <web>Analytics.Code.Macros.PagesFollowingaSiteSearchMacro</web>
+  <name>RowEvolutionPagesFollowingaSiteSearchJSON</name>
+  <language/>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>0</translation>
+  <creator>XWiki.superadmin</creator>
+  <creationDate>1692362591000</creationDate>
+  <parent>WebHome</parent>
+  <author>XWiki.superadmin</author>
+  <contentAuthor>XWiki.superadmin</contentAuthor>
+  <date>1692555834000</date>
+  <contentUpdateDate>1692550072000</contentUpdateDate>
+  <version>2.2</version>
+  <title>RowEvolutionPagesFollowingaSiteSearchJSON</title>
+  <comment>Update document after refactoring.</comment>
+  <minorEdit>true</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content>{{velocity}}&#xd;
+#set ($segment = 'pageUrl==' + $request.parameter)&#xd;
+#set ($parameters ={&#xd;
+  'period' : $request.period,&#xd;
+  'date' : $request.date,&#xd;
+  'module' : 'API',&#xd;
+  'method' : 'Actions.getPageUrlsFollowingSiteSearch',&#xd;
+  'format' : 'json',&#xd;
+  'flat' : '1',&#xd;
+  'segment' : $segment&#xd;
+})&#xd;
+#set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, 'RowEvolution'))&#xd;
+#jsonResponse($analyticsResult)&#xd;
+{{/velocity}}</content>
+</xwikidoc>

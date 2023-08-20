@@ -1,0 +1,508 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.PagesFollowingaSiteSearchMacro.PagesFollowingaSiteSearch" locale="">
+  <web>Analytics.Code.Macros.PagesFollowingaSiteSearchMacro</web>
+  <name>PagesFollowingaSiteSearch</name>
+  <language/>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>0</translation>
+  <creator>XWiki.superadmin</creator>
+  <creationDate>1692362550000</creationDate>
+  <parent>Analytics.Code.Macros.PagesFollowingaSiteSearchMacro.WebHome</parent>
+  <author>XWiki.superadmin</author>
+  <contentAuthor>XWiki.superadmin</contentAuthor>
+  <date>1692368822000</date>
+  <contentUpdateDate>1692364667000</contentUpdateDate>
+  <version>9.1</version>
+  <title>PagesFollowingaSiteSearch</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content>{{pagesFollowingaSiteSearch /}}&#xd;
+&#xd;
+{{html clean="false"}}&#xd;
+&lt;div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel" aria-hidden="true">&#xd;
+&lt;div class="modal-dialog modal-lg">&#xd;
+&lt;div class="modal-content">&#xd;
+&lt;div class="modal-header">&#xd;
+&lt;button type="button" class="close" data-dismiss="modal" aria-label="Close">&#xd;
+&lt;span aria-hidden="true">&amp;times;&lt;/span>&#xd;
+&lt;/button>&#xd;
+&lt;h4 class="modal-title" id="chartModalLabel">Row Evolution&lt;/h4>&#xd;
+&lt;/div>&#xd;
+&lt;div class="modal-body">&#xd;
+&lt;label for="periodSelect">Period&lt;/label>&#xd;
+&lt;select id="periodSelect" class="form-control">&#xd;
+&lt;option value="Day">Day&lt;/option>&#xd;
+&lt;option value="Week">Week&lt;/option>&#xd;
+&lt;option value="Month">Month&lt;/option>&#xd;
+&lt;option value="Year">Year&lt;/option>&#xd;
+&lt;/select>&#xd;
+&lt;div id="options" data-request-page=RowEvolutionMostViwedPagesJSON>&#xd;
+&lt;select id="periodDurationDay" class="form-control">&#xd;
+&lt;option value="30">30&lt;/option>&#xd;
+&lt;option value="8">8&lt;/option>&#xd;
+&lt;option value="60">60&lt;/option>&#xd;
+&lt;option value="90">90&lt;/option>&#xd;
+&lt;option value="180">180&lt;/option>&#xd;
+&lt;option value="365">365&lt;/option>&#xd;
+&lt;option value="500">500&lt;/option>&#xd;
+&lt;/select>&#xd;
+&lt;select id="periodDurationWeek" class="form-control">&#xd;
+&lt;option value="4">4&lt;/option>&#xd;
+&lt;option value="12">12&lt;/option>&#xd;
+&lt;option value="26">26&lt;/option>&#xd;
+&lt;option value="52">52&lt;/option>&#xd;
+&lt;option value="104">104&lt;/option>&#xd;
+&lt;option value="500">500&lt;/option>&#xd;
+&lt;/select>&#xd;
+&lt;select id="periodDurationMonth" class="form-control">&#xd;
+&lt;option value="3">3&lt;/option>&#xd;
+&lt;option value="6">6&lt;/option>&#xd;
+&lt;option value="12">12&lt;/option>&#xd;
+&lt;option value="24">24&lt;/option>&#xd;
+&lt;option value="36">36&lt;/option>&#xd;
+&lt;option value="120">120&lt;/option>&#xd;
+&lt;/select>&#xd;
+&lt;select id="periodDurationYear" class="form-control">&#xd;
+&lt;option value="3">3&lt;/option>&#xd;
+&lt;option value="5">5&lt;/option>&#xd;
+&lt;option value="10">10&lt;/option>&#xd;
+&lt;/select>&#xd;
+&lt;/div>&#xd;
+&lt;label for="field">Field&lt;/label>&#xd;
+&lt;select id="field" class="form-control">&#xd;
+&lt;option value="nb_hits">Pageviews&lt;/option>&#xd;
+&lt;option value="">Clicked in search results&lt;/option>&#xd;
+&lt;/select>&#xd;
+&lt;canvas id="chart-display">&lt;/canvas>&#xd;
+&lt;/div>&#xd;
+&lt;div class="modal-footer">&#xd;
+&lt;button type="button" class="btn btn-default" data-dismiss="modal">Close&lt;/button>&#xd;
+&lt;/div>&#xd;
+&lt;/div>&#xd;
+&lt;/div>&#xd;
+&lt;/div>&#xd;
+{{/html}}&#xd;
+&#xd;
+&#xd;
+ </content>
+  <object>
+    <name>Analytics.Code.Macros.PagesFollowingaSiteSearchMacro.PagesFollowingaSiteSearch</name>
+    <number>0</number>
+    <className>XWiki.WikiMacroClass</className>
+    <guid>d3dc7d9c-753c-4261-aab4-546067169ce1</guid>
+    <class>
+      <name>XWiki.WikiMacroClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <async_cached>
+        <defaultValue>0</defaultValue>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>async_cached</name>
+        <number>13</number>
+        <prettyName>Cached</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </async_cached>
+      <async_context>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>1</multiSelect>
+        <name>async_context</name>
+        <number>14</number>
+        <prettyName>Context elements</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator>, </separator>
+        <separators>|, </separators>
+        <size>5</size>
+        <unmodifiable>0</unmodifiable>
+        <values>action=Action|doc.reference=Document|icon.theme=Icon theme|locale=Language|rendering.defaultsyntax=Default syntax|rendering.restricted=Restricted|rendering.targetsyntax=Target syntax|request.base=Request base URL|request.parameters=Request parameters|request.url=Request URL|request.wiki=Request wiki|user=User|wiki=Wiki</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </async_context>
+      <async_enabled>
+        <defaultValue>0</defaultValue>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>async_enabled</name>
+        <number>12</number>
+        <prettyName>Asynchronous rendering</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </async_enabled>
+      <code>
+        <disabled>0</disabled>
+        <editor>Text</editor>
+        <name>code</name>
+        <number>10</number>
+        <prettyName>Macro code</prettyName>
+        <rows>20</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <contentDescription>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>contentDescription</name>
+        <number>9</number>
+        <prettyName>Content description (Not applicable for "No content" type)</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </contentDescription>
+      <contentJavaType>
+        <cache>0</cache>
+        <defaultValue>Unknown</defaultValue>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <freeText>allowed</freeText>
+        <largeStorage>1</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>contentJavaType</name>
+        <number>8</number>
+        <picker>1</picker>
+        <prettyName>Macro content type</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator>|</separator>
+        <separators>|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>Unknown|Wiki</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentJavaType>
+      <contentType>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>contentType</name>
+        <number>7</number>
+        <prettyName>Macro content availability</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator>|</separator>
+        <separators>|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>Optional|Mandatory|No content</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentType>
+      <defaultCategory>
+        <disabled>0</disabled>
+        <name>defaultCategory</name>
+        <number>4</number>
+        <prettyName>Default category</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultCategory>
+      <description>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>description</name>
+        <number>3</number>
+        <prettyName>Macro description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <id>
+        <disabled>0</disabled>
+        <name>id</name>
+        <number>1</number>
+        <prettyName>Macro id</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </id>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>2</number>
+        <prettyName>Macro name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <priority>
+        <disabled>0</disabled>
+        <name>priority</name>
+        <number>11</number>
+        <numberType>integer</numberType>
+        <prettyName>Priority</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </priority>
+      <supportsInlineMode>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>supportsInlineMode</name>
+        <number>5</number>
+        <prettyName>Supports inline mode</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </supportsInlineMode>
+      <visibility>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>visibility</name>
+        <number>6</number>
+        <prettyName>Macro visibility</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator>|</separator>
+        <separators>|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>Current User|Current Wiki|Global</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </visibility>
+    </class>
+    <property>
+      <async_cached>0</async_cached>
+    </property>
+    <property>
+      <async_context/>
+    </property>
+    <property>
+      <async_enabled>0</async_enabled>
+    </property>
+    <property>
+      <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}&#xd;
+{{velocity}}&#xd;
+#getDate()&#xd;
+#set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))&#xd;
+#set ($period = 'range')&#xd;
+#set ($parameters = $escapetool.url({&#xd;
+        'date': $date,&#xd;
+        'period': $$period,&#xd;
+        'limitEntries' : '-1'&#xd;
+}))&#xd;
+#set ($columns = ['destinationPage', 'clicked', 'pageViews', 'loadTime', 'actions'])&#xd;
+#set ($columnsProperties = {&#xd;
+  'destinationPage' : { 'type' : 'text', 'sortable' : true },&#xd;
+  'clicked' : { 'type' : 'text', 'sortable' : true },&#xd;
+  'pageViews' : { 'type' : 'text', 'sortable' : true },&#xd;
+  'loadTime' : { 'type' : 'text', 'sortable' : true },&#xd;
+  'actions' : {'type': 'text', 'html':'true', 'sortable' : false, 'filterable' : false}&#xd;
+})&#xd;
+#set($options = {&#xd;
+  'translationPrefix': 'analytics.pagesFollowingaSiteSearch.header.',&#xd;
+  'resultPage': 'Analytics.Code.Macros.PagesFollowingaSiteSearchMacro.PagesFollowingaSiteSearchJSON',&#xd;
+  'extraParams': $parameters&#xd;
+})&#xd;
+#livetable('pagesFollowingaSiteSearch' $columns $columnsProperties $options)&#xd;
+#modalRowEvolution({'Pageviews':'nb_hits','Clicked in search results':''},&#xd;
+        'RowEvolutionPagesFollowingaSiteSearchJSON')&#xd;
+{{/velocity}}</code>
+    </property>
+    <property>
+      <contentDescription></contentDescription>
+    </property>
+    <property>
+      <contentJavaType></contentJavaType>
+    </property>
+    <property>
+      <contentType>No content</contentType>
+    </property>
+    <property>
+      <defaultCategory></defaultCategory>
+    </property>
+    <property>
+      <description></description>
+    </property>
+    <property>
+      <id>pagesFollowingaSiteSearch</id>
+    </property>
+    <property>
+      <name>Pages Following a Site Search</name>
+    </property>
+    <property>
+      <priority/>
+    </property>
+    <property>
+      <supportsInlineMode>1</supportsInlineMode>
+    </property>
+    <property>
+      <visibility>Current Wiki</visibility>
+    </property>
+  </object>
+  <object>
+    <name>Analytics.Code.Macros.PagesFollowingaSiteSearchMacro.PagesFollowingaSiteSearch</name>
+    <number>0</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>27c0f01e-a508-46bf-b0c1-ef5350ef6305</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
+    </class>
+    <property>
+      <defaultValue></defaultValue>
+    </property>
+    <property>
+      <description></description>
+    </property>
+    <property>
+      <mandatory/>
+    </property>
+    <property>
+      <name>endDate</name>
+    </property>
+    <property>
+      <type>java.util.Date</type>
+    </property>
+  </object>
+  <object>
+    <name>Analytics.Code.Macros.PagesFollowingaSiteSearchMacro.PagesFollowingaSiteSearch</name>
+    <number>1</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>e05b3b3a-9bb9-41a9-852c-bd26d724cf43</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
+    </class>
+    <property>
+      <defaultValue></defaultValue>
+    </property>
+    <property>
+      <description></description>
+    </property>
+    <property>
+      <mandatory>0</mandatory>
+    </property>
+    <property>
+      <name>startDate</name>
+    </property>
+    <property>
+      <type>java.util.Date</type>
+    </property>
+  </object>
+</xwikidoc>
