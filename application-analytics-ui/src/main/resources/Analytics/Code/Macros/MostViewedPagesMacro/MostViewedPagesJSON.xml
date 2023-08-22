@@ -56,7 +56,6 @@
     'visits' : 'nb_visits',
     'hits' : 'nb_hits',
     'timeSpent' : 'sum_time_spent',
-    'entryNbVisits' : 'entry_nb_visits',
     'entryNbActions' : 'entry_nb_actions',
     'bounceRate' : 'bounce_rate',
     'exitRate' : 'exit_rate'
@@ -96,7 +95,6 @@
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'hits' : $currentEntry.get('nb_hits').asText(),
       'timeSpent' : $currentEntry.get('sum_time_spent').asText(),
-      'entryNbVisits' : $currentEntry.get('entry_nb_visits').asText(),
       'entryNbActions' : $currentEntry.get('entry_nb_actions').asText(),
       'bounceRate' : $currentEntry.get('bounce_rate').asText(),
       'exitRate' : $currentEntry.get('exit_rate').asText(),

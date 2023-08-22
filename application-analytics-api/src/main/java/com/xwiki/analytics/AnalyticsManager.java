@@ -43,8 +43,8 @@ public interface AnalyticsManager
 {
     /**
      * This function will make the request to get the data.
-     * @param jsonNormaliserHint Hint to select the json normaliser.
-     * @param parameters A list of key, value pairs that will represent the parameters for the request.
+     * @param jsonNormaliserHint hint to select the json normaliser
+     * @param parameters a list of key, value pairs that will represent the parameters for the request
      * @return A JSON string.
      */
     JsonNode requestData(Map<String, String> parameters, String jsonNormaliserHint)
