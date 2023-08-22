@@ -20,8 +20,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.SiteSearchKeywords.RowEvolutionSiteSearchKeywordsJSON" locale="">
-  <web>Analytics.Code.Macros.SiteSearchKeywords</web>
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.SiteSearchKeywordsMacro.RowEvolutionSiteSearchKeywordsJSON" locale="">
+  <web>Analytics.Code.Macros.SiteSearchKeywordsMacro</web>
   <name>RowEvolutionSiteSearchKeywordsJSON</name>
   <language/>
   <defaultLanguage/>

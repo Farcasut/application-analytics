@@ -155,7 +155,7 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
                     if (objNode.has(URL)) {
                         this.handleURLNode((ObjectNode) objNode);
                     }
-                    ((ObjectNode) objNode).put(DATE, "");
+                    arrayNode.add(objNode);
                 }
             }
         }
