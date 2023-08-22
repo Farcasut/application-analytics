@@ -246,18 +246,17 @@
 #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
 #set ($period = 'range')
 #set ($parameters = $escapetool.url({
-        'date': $date,
-        'period': $$period,
-        'limitEntries' : '-1'
+  'date': $date,
+  'period': $period,
+  'limitEntries': '-1'
 }))
-#set ($columns = ['date', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate', 'actions'])
+#set ($columns = ['date', 'title', 'visits', 'hits', 'timeSpent', 'entryNbActions', 'bounceRate', 'exitRate'])
 #set ($columnsProperties = {
   'date' : { 'type' : 'text', 'sortable' : true },
   'title' : { 'type' : 'text', 'sortable' : true },
   'visits' : { 'type' : 'text', 'sortable' : true },
   'hits' : { 'type' : 'text', 'sortable' : true },
   'timeSpent' : { 'type' : 'text', 'sortable' : true },
-  'entryNbVisits' : { 'type' : 'text', 'sortable' : true },
   'entryNbActions' : { 'type' : 'text', 'sortable' : true },
   'bounceRate' : { 'type' : 'text', 'sortable' : true },
   'exitRate' : { 'type' : 'text', 'sortable' : true },

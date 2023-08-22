@@ -46,6 +46,8 @@
       <artifactId>jsr311-api</artifactId>
     </dependency>
     <!-- Testing dependencies -->
+    <!-- UriBuilder in JAX-RS is abstract implementation and requiring an implementation like Jersey for unit testing.
+     -->
     <dependency>
       <groupId>org.xwiki.commons</groupId>
       <artifactId>xwiki-commons-tool-test-component</artifactId>
@@ -80,14 +82,6 @@
           <excludes>
             <exclude>**/test/**/*.class</exclude>
           </excludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>11</source>
-          <target>11</target>
         </configuration>
       </plugin>
     </plugins>

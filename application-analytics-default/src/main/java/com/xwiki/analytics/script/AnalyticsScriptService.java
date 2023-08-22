@@ -61,7 +61,7 @@ public class AnalyticsScriptService implements ScriptService
         try {
             return analyticsManager.requestData(parameters, jsonNormaliserHint);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to get data for " + jsonNormaliserHint, e);
+            throw new RuntimeException(String.format("Failed to get data for [%s]", jsonNormaliserHint), e);
         }
     }
 }

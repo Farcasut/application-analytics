@@ -25,15 +25,14 @@ import java.util.HashMap;
 import javax.inject.Named;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.slf4j.Logger;
+import org.xwiki.component.util.ReflectionUtils;
 import org.xwiki.test.junit5.mockito.ComponentTest;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
 import org.xwiki.test.junit5.mockito.MockComponent;
 
 import com.xwiki.analytics.JsonNormaliser;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
-import org.xwiki.component.util.ReflectionUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -67,9 +66,10 @@ public class MatomoAnalyticsManagerTest
         when(this.configuration.getAuthenticationToken()).thenReturn("token");
         when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
         when(this.configuration.getIdSite()).thenReturn("3");
-        this.matomoAnalyticsManager.requestData(new HashMap<>(), "MostViewedPages");
+        this.matomoAnalyticsManager.requestData(new HashMap<>(), MostViewedJsonNormaliser.HINT);
         verify(this.jsonNormaliser).normaliseData(any(String.class));
     }
+
     @Test
     public void requestDataWithInvalidNormaliser() throws IOException, InterruptedException
     {

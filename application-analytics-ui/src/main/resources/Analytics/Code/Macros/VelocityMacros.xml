@@ -59,7 +59,6 @@
   #if (!$endDate)
     #set ($endDate = $datetool.get('yyyy-MM-dd'))
   #end
-  ## Prepare the livetable with the fields and properties.
   #set ($date = $startDate + ',' + $endDate)
 #end
 

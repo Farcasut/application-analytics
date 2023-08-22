@@ -26,8 +26,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
- * The interface for the json normalisation classes. Matomo may return several variants of JSON formats for easy of
- * use in javascript and velocity I need to process them.
+ * Provides APIs for normalizing data received from Matomo, for easing the afterwards manipulations. Depending on what
+ * was requested from Matomo, the response can have various formats, which are not consistent or need enhancement.
  *
  * @version $Id$
  * @since 1.0
@@ -39,10 +39,9 @@ public interface JsonNormaliser
     /**
      * Normalise the data returned to have only one format.
      *
-     * @param jsonString A string that has a proper json format.
+     * @param jsonString A string that has a proper json format
      * @return Returns the json in string format
-     * @throws JsonProcessingException Throws this error when the jsonString param is not a proper json.
+     * @throws JsonProcessingException Throws this error when the jsonString param is not a proper json
      */
-    JsonNode normaliseData(String jsonString)
-        throws JsonProcessingException;
+    JsonNode normaliseData(String jsonString) throws JsonProcessingException;
 }

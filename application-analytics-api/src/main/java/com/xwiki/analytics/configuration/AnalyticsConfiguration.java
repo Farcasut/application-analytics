@@ -33,17 +33,17 @@ import org.xwiki.stability.Unstable;
 public interface AnalyticsConfiguration
 {
     /**
-     * @return the address where the requests will be made.
+     * @return the address where the requests will be made
      */
     String getRequestAddress();
 
     /**
-     * @return the id of the site that we want to see the statistics for.
+     * @return the id of the site that we want to see the statistics for
      */
     String getIdSite();
 
     /**
-     * @return the Authentication Token that permits to access the statistics.
+     * @return the authentication token that permits to access the statistics
      */
     String getAuthenticationToken();
 }
