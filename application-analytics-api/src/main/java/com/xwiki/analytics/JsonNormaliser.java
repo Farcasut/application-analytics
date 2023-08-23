@@ -39,9 +39,11 @@ public interface JsonNormaliser
     /**
      * Normalise the data returned to have only one format.
      *
+     * @param filteringField the parameter that we will filter after
+     * @param filterValue the value for witch we will filter the results
      * @param jsonString A string that has a proper json format
      * @return Returns the json in string format
      * @throws JsonProcessingException Throws this error when the jsonString param is not a proper json
      */
-    JsonNode normaliseData(String jsonString) throws JsonProcessingException;
+    JsonNode normaliseData(String jsonString, String filteringField, String filterValue) throws JsonProcessingException;
 }

@@ -89,12 +89,16 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
     private EntityReferenceSerializer<String> serializer;
 
     /**
-     * Normalize Matomo response for format consistency and add extra information needed by XWiki.
      *
-     * @param jsonString the Matomo JSON response, in {@code String} format
-     * @return the normalised json
+     * @param jsonString A string that has a proper json format
+     * @param filteringField the parameter that we will filter after
+     * @param filterValue the value for witch we will filter the results
+     * @return
+     * @throws JsonProcessingException
      */
-    public JsonNode normaliseData(String jsonString) throws JsonProcessingException
+    @Override
+    public JsonNode normaliseData(String jsonString, String filteringField, String filterValue)
+        throws JsonProcessingException
     {
         // Convert the string returned by Matomo in a JSON format to easily handle the processing of the nodes.
         JsonNode jsonRoot = OBJECT_MAPPER.readTree(jsonString);
@@ -107,9 +111,9 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
         // field called 'date'. This 'date' field will be set to 'N/A' when Matomo returns an array instead of an
         // object. For both type of formats, the label field is also altered in order to contain the full page name
         if (jsonRoot.isArray()) {
-            processArrayNode(jsonRoot);
+            jsonRoot = processArrayNode(jsonRoot, filteringField, filterValue);
         } else {
-            jsonRoot = processObjectNode(jsonRoot);
+            jsonRoot = processObjectNode(jsonRoot, filteringField, filterValue);
         }
         return jsonRoot;
     }
@@ -118,18 +122,20 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
      * This method processes each entry to append an empty date to it.
      *
      * @param jsonNode an array of jsons
+     * @param filteringField the parameter that we will filter after
+     * @param filterValue the value for witch we will filter the results
+     * @return array of jsons
      */
-    private void processArrayNode(JsonNode jsonNode)
+    private JsonNode processArrayNode(JsonNode jsonNode, String filteringField, String filterValue)
     {
+        ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         for (JsonNode objNode : jsonNode) {
-            if (objNode.isObject()) {
-                ((ObjectNode) objNode).put(DATE, "");
-                // Just in case that this normalsier wil be used in the future for other macros that do not have an url.
-                if (objNode.has(URL)) {
-                    this.handleURLNode((ObjectNode) objNode);
-                }
+            if (filterValue == null || filterValue.equals(objNode.get(filteringField).asText())) {
+                processJsonNode(objNode, "");
+                arrayNode.add(objNode);
             }
         }
+        return arrayNode;
     }
 
     /**
@@ -137,10 +143,12 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
      * function extracts the date from the key and adds it to each page. Ultimately, it returns an array of JSON objects
      * instead of a single JSON object.
      *
-     * @param jsonNode json object
+     * @param jsonNode an array of jsons
+     * @param filteringField the parameter that we will filter after
+     * @param filterValue the value for witch we will filter the results
      * @return array of jsons
      */
-    private ArrayNode processObjectNode(JsonNode jsonNode)
+    private JsonNode processObjectNode(JsonNode jsonNode, String filteringField, String filterValue)
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         Iterator<String> fieldNames = jsonNode.fieldNames();
@@ -148,18 +156,30 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
             String date = fieldNames.next();
             JsonNode childNode = jsonNode.get(date);
             for (JsonNode objNode : childNode) {
-                if (objNode.isObject()) {
-                    ((ObjectNode) objNode).put(DATE, date);
-                    // Just in case that this normalsier wil be used in the future for other macros that do not have an
-                    // url.
-                    if (objNode.has(URL)) {
-                        this.handleURLNode((ObjectNode) objNode);
-                    }
+                if (filterValue == null || filterValue.equals(objNode.get(filteringField).asText())) {
+                    processJsonNode(objNode, date);
                     arrayNode.add(objNode);
                 }
+                }
+            }
+
+        return arrayNode;
+    }
+
+    /**
+     * @param objNode current json
+     * @param date the date that will be added to the jsons
+     */
+    private void processJsonNode(JsonNode objNode, String date)
+    {
+        if (objNode.isObject()) {
+            ObjectNode objectNode = (ObjectNode) objNode;
+            objectNode.put(DATE, date);
+
+            if (objectNode.has(URL)) {
+                handleURLNode(objectNode);
             }
         }
-        return arrayNode;
     }
 
     /**

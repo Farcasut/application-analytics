@@ -56,7 +56,7 @@ public class RowEvolutionJsonNormaliser implements JsonNormaliser
      * @param jsonString the json provided by Matomo.
      * @return the normalised json as a JsonNode.
      */
-    public JsonNode normaliseData(String jsonString) throws JsonProcessingException
+    public JsonNode normaliseData(String jsonString, String filteringField, String filterValue) throws JsonProcessingException
     {
         JsonNode jsonNode = OBJECT_MAPPER.readTree(jsonString);
         return processObjectNode(jsonNode);
