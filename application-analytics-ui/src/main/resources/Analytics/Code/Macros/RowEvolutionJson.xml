@@ -41,13 +41,17 @@
   'period' : $request.period,
   'date' : $request.date,
   'module' : 'API',
-  'method' : 'Actions.getPageUrl',
   'format' : 'json'
 })
+#set ($filters = {})
 #if ($request.macroName=='MostViewedPages')
   $parameters.put('pageUrl', $request.parameter)
+  $parameters.put('method', 'Actions.getPageUrl')
+#elseif ($request.macroName=='SiteSearchKeywordWithNoResponse')
+  $parameters.put('method', 'Actions.getSiteSearchNoResultKeywords')
+  $parameters.put('segment', $request.parameter)
 #end
-#set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, {}, 'RowEvolution'))
+#set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'RowEvolution'))
 #jsonResponse($analyticsResult)
 {{/velocity}}
 </content>
