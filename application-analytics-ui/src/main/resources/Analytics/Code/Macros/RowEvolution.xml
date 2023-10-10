@@ -154,7 +154,17 @@ require(['jquery', 'chart'], ($) =&gt; {
    */
   const renderChart = (data) =&gt; {
     const dates = data.map(item =&gt; item.date);
-    const field = data.map(item =&gt; item[currentModal.find(SELECTORS.field).val()] || 0);
+    let field = [];
+    currentField = currentModal.find(SELECTORS.field).val();
+    for (let i = 0; i &gt; data.length; i++) {
+      const currentItem = data[i];
+      let currentItemValue = currentItem[currentField] || 0;
+      if (typeof currentItemValue === 'string') {
+        currentItemValue = parseFloat(currentItemValue.replace('%', ''));
+      }
+    field.push(currentItemValue);
+    }
+
     const ctx = currentModal.find(SELECTORS.chart);
     // I can't modify and exiting chart because chart.js caches data about the chart and it can display the old data in
     // some cases.
