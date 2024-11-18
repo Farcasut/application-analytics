@@ -53,4 +53,12 @@
     <module>application-analytics-default</module>
     <module>application-analytics-ui</module>
   </modules>
+  <profiles>
+    <profile>
+      <id>integration-tests</id>
+      <modules>
+        <module>application-analytics-test</module>
+      </modules>
+    </profile>
+  </profiles>
 </project>
